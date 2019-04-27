@@ -1,4 +1,4 @@
-# Software Stack for JEDI applications
+# Software Stack on OSX
 
 This repository will facilitate building widely used packages by JEDI from source, instead of using existing package managers e.g. [HomeBrew](https://brew.sh/) for OSX, [apt-get](https://linux.die.net/man/8/apt-get) for Linux, etc.
 
