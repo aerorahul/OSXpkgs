@@ -17,14 +17,16 @@ module load $(echo $compiler | sed 's/-/\//g')
 module load $(echo $mpi | sed 's/-/\//g')
 module load szip
 module load hdf5
+module load netcdf
 module list
 set -x
 
-export FC=mpif90
-export CC=mpicc
-export CXX=mpicxx
+export MPIF90=mpif90
+export MPICC=mpicc
+export MPICXX=mpicxx
 
-export F9X=$FC
+export MPIF77=$MPIF90
+export F77=$FC
 export FFLAGS="-fPIC"
 export CFLAGS="-fPIC"
 export CXXFLAGS="-fPIC"
@@ -42,7 +44,7 @@ mkdir -p build && cd build
 prefix="${PREFIX:-"${HOME}/opt"}/$compiler/$mpi/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
-../configure --prefix=$prefix
+../configure --prefix=$prefix --enable-shared --enable-netcdf4 --with-netcdf4=$NETCDF_ROOT
 
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check

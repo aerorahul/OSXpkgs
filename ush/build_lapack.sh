@@ -20,16 +20,16 @@ export CFLAGS="-fPIC"
 export CXXFLAGS="-fPIC"
 export FCFLAGS="-fPIC"
 
-url="http://www.netlib.org/lapack/$software.tgz"
+url="http://www.netlib.org/lapack/$software.tar.gz"
 
 cd ${PKGDIR:-"../pkg"}
 
-[[ -d $software ]] || ( wget $url; tar -xf $software.tgz )
+[[ -d $software ]] || ( wget $url; tar -xf $software.tar.gz )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"/opt/modules"}/$compiler/$name/$version"
+prefix="${PREFIX:-"${HOME}/opt"}/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "WARNING: $prefix EXISTS, ABORT!"; exit 1 )
 
 # Add CMAKE_INSTALL_LIBDIR to make sure it will be installed under lib not lib64
