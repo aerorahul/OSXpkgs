@@ -2,27 +2,27 @@
 
 set -ex
 
-name="hdf5"
+name="pnetcdf"
 version=$1
 
 software=$name-$version
 
-compiler=${COMPILER:-"gnu-7.3.0"}
-mpi=${MPI:-""}
+# Hyphenated version used for install prefix
+compiler=$(echo $COMPILER | sed 's/\//-/g')
+mpi=$(echo $MPI | sed 's/\//-/g')
 
 set +x
 source $MODULESHOME/init/sh
 module load $(echo $compiler | sed 's/-/\//g')
 module load $(echo $mpi | sed 's/-/\//g')
 module load szip
+module load hdf5
 module list
 set -x
 
-if [[ ! -z $mpi ]]; then
-    export FC=mpif90
-    export CC=mpicc
-    export CXX=mpicxx
-fi
+export FC=mpif90
+export CC=mpicc
+export CXX=mpicxx
 
 export F9X=$FC
 export FFLAGS="-fPIC"
@@ -30,21 +30,19 @@ export CFLAGS="-fPIC"
 export CXXFLAGS="-fPIC"
 export FCFLAGS="$FFLAGS"
 
-gitURL="https://bitbucket.hdfgroup.org/scm/hdffv/hdf5.git"
+url="https://parallel-netcdf.github.io/Release/$software.tar.gz"
 
 cd ${PKGDIR:-"../pkg"}
 
-[[ -d $software ]] || ( git clone -b $software $gitURL $software )
+[[ -d $software ]] || ( wget $url; tar -xf $software.tar.gz )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$version"
+prefix="${PREFIX:-"${HOME}/opt"}/$compiler/$mpi/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
-[[ -z $mpi ]] || extra_conf="--enable-parallel --enable-unsupported"
-
-../configure --prefix=$prefix --enable-fortran --enable-cxx --enable-hl --enable-shared --with-szlib=$SZIP_ROOT $extra_conf
+../configure --prefix=$prefix
 
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
