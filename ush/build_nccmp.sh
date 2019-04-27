@@ -26,7 +26,7 @@ url="https://sourceforge.net/projects/nccmp/files/${software}.tar.gz"
 cd ${PKGDIR:-"../pkg"}
 
 # Enable header pad comparison, if netcdf-c src directory exists!
-[[ -d "netcdf-c" ]] && extra_confs="--with-netcdf=$PWD/netcdf-c" || extra_confs=""
+[[ -d "netcdf-c-$NETCDF_VERSION" ]] && extra_confs="--with-netcdf=$PWD/netcdf-c-$NETCDF_VERSION" || extra_confs=""
 
 [[ -d $software ]] || ( wget $url; tar -xf $software.tar.gz )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
