@@ -11,11 +11,13 @@ The following software can be built with the scripts under `ush` and instruction
 * MPICH
 * HDF5
 * NetCDF
+* Parallel NetCDF
 * NCCMP
 * Udunits
 * NetCDF Climate Operators
 * Boost
 * Eigen
+* LAPACK
 * FFTW
 * ecCodes
 * ESMF
