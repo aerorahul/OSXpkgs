@@ -2,9 +2,11 @@
 
 set -x
 
+export STACKROOT=$(dirname $PWD)
+
 export PREFIX="${HOME}/opt"
 export CHECK="NO"
-export PKGDIR="${PWD}/../pkg"
+export PKGDIR="$STACKROOT/pkg"
 
 compilerName="gnu"
 compilerVersion="7.3.0"
