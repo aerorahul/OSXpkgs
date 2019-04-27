@@ -1,6 +1,6 @@
 # Software Stack on OSX
 
-This repository will facilitate building widely used packages by JEDI from source, instead of using existing package managers e.g. [HomeBrew](https://brew.sh/) for OSX, [apt-get](https://linux.die.net/man/8/apt-get) for Linux, etc.
+This repository will facilitate building widely used packages from source, instead of using existing package managers e.g. [HomeBrew](https://brew.sh/) for OSX, [apt-get](https://linux.die.net/man/8/apt-get) for Linux, etc.
 
 The following software can be built with the scripts under `ush` and instructions that follow:
 * GCC
@@ -11,6 +11,7 @@ The following software can be built with the scripts under `ush` and instruction
 * MPICH
 * HDF5
 * NetCDF
+* NCCMP
 * Udunits
 * NetCDF Climate Operators
 * Boost
@@ -21,8 +22,8 @@ The following software can be built with the scripts under `ush` and instruction
 * ESMA-Baselibs
 
 ### Pre-requisites
-* Lua Modules - for software stack management
-* wget, curl, git - for fetching packages
+* `lmod` - Lua Modules for software stack management
+* `wget`, `curl`, `git` - for fetching packages
 * Other
 
 ### Packages
@@ -35,11 +36,9 @@ export COMPILER="gnu-7.3.0"
 ```
 
 ### MPI options
-Set the default MPI flavour to build the stack.
+Set the default MPI flavour to build the stack (or disable it).
 ```
-export MPI="" # Disable MPI for some software e.g. HDF5, NetCDF, Boost, etc.
-export MPI="openmpi-3.1.2"
-export MPI="mpich-3.2.1"
+export MPI="" | "openmpi-3.1.2" | "mpich-3.2.1" # Disable MPI, use OpenMPI or MPICH for some software e.g. HDF5, NetCDF, Boost, etc.
 ```
 
 ### Installation path
@@ -52,7 +51,7 @@ If `$PREFIX` is anything other than `/opt`, the user will have to define an envi
 ### Verify installation
 Check the installation; will execute ctest or make check
 ```
-export CHECK="YES|NO" # Enable|Disable checking
+export CHECK="YES" | "NO" # Enable | Disable checking
 ```
 ### Todos
 Update `ush/deploy_modules.sh` to automagically create appropriate modulefiles for packages from templates.
