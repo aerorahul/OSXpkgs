@@ -5,6 +5,8 @@ set -x
 name="boost"
 version=$1
 
+software=$name-$version
+
 compiler=${COMPILER:-"gnu-7.3.0"}
 mpi=${MPI:-""}
 
@@ -20,7 +22,7 @@ set -x
 gitURL="https://github.com/boostorg/boost.git"
 
 cd ${PKGDIR:-"../pkg"}
-software=$name-$version
+
 [[ -d $software ]] || ( git clone -b $software $gitURL $software )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 
@@ -52,7 +54,7 @@ EOF
 rm -f $HOME/user-config.jam
 [[ -z $mpi ]] && rm -f ./user-config.jam || mv -f ./user-config.jam $HOME
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$version"
+prefix="$PREFIX/$compiler/$mpi/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 ./bootstrap.sh --with-toolset=$toolset
@@ -68,5 +70,8 @@ mv stage/lib $prefix
 cp -R boost $prefix/include
 
 rm -f $HOME/user-config.jam
+
+[[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
+$STACKROOT/ush/deploy_module.sh $hierarchy $name $version
 
 exit 0

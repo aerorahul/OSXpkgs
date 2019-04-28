@@ -35,7 +35,7 @@ export FCFLAGS="$FFLAGS"
 
 gitURLroot="https://github.com/Unidata"
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$c_version"
+prefix="$PREFIX/$compiler/$mpi/$name/$c_version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 [[ -z $mpi ]] || extra_conf="--enable-parallel-tests"
@@ -95,5 +95,8 @@ mkdir -p build && cd build
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
+
+[[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
+$STACKROOT/ush/deploy_module.sh $hierarchy $name $version
 
 exit 0

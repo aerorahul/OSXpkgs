@@ -37,7 +37,7 @@ else
 fi
 
 # Installation path
-prefix="${PREFIX:-"$HOME/opt"}/$name/$version"
+prefix="$PREFIX/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 cd $curr_dir
@@ -109,5 +109,7 @@ mkdir -p build && cd build
               --with-isl=$prefix
 make -j${NTHREADS:-4}
 make install
+
+$STACKROOT/ush/deploy_module.sh "core" $name $version
 
 exit 0

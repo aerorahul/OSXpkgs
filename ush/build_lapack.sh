@@ -29,7 +29,7 @@ cd ${PKGDIR:-"../pkg"}
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"${HOME}/opt"}/$compiler/$name/$version"
+prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "WARNING: $prefix EXISTS, ABORT!"; exit 1 )
 
 # Add CMAKE_INSTALL_LIBDIR to make sure it will be installed under lib not lib64
@@ -44,5 +44,7 @@ cmake \
 make -j${NTHREADS:-4}
 [[ $CHECK = "YES" ]] && make check
 make install
+
+$STACKROOT/ush/deploy_module.sh "compiler" $name $version
 
 exit 0

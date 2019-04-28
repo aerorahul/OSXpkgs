@@ -39,7 +39,7 @@ cd ${PKGDIR:-"../pkg"}
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$version"
+prefix="$PREFIX/$compiler/$mpi/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 [[ -z $mpi ]] || extra_conf="--enable-parallel --enable-unsupported"
@@ -49,5 +49,8 @@ prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$version"
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
+
+[[ -z $mpi ]] && hierarchy="compliler" || hierarchy="mpi"
+$STACKROOT/ush/deploy_module.sh $hierarchy $name $version
 
 exit 0

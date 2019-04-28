@@ -5,6 +5,8 @@ set -ex
 name="baselibs"
 version=$1
 
+software=$name-$version
+
 compiler=${COMPILER:-"gnu-7.3.0"}
 mpi=${MPI:-"openmpi-3.1.2"}
 
@@ -19,11 +21,10 @@ gitURL="https://developer.nasa.gov/GMAO/ESMA-Baselibs.git"
 
 cd ${PKGDIR:-"../pkg"}
 
-software=$name-$version
 [[ -d $software ]] || ( git clone -b $version $gitURL $software )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$version"
+prefix="$PREFIX/$compiler/$mpi/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 compilerD=$(echo $compiler | sed 's/-/_/g')
@@ -37,5 +38,7 @@ case "$mpiN" in
 esac
 
 make install F90=$FC ESMF_COMM=$ESMF_COMM CONFIG="${compilerD}-${mpiD}" prefix=$prefix
+
+$STACKROOT/ush/deploy_module.sh "mpi" $name $version
 
 exit 0

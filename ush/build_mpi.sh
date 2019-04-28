@@ -5,6 +5,8 @@ set -ex
 name=$1
 version=$2
 
+software=$name-$version
+
 mm=$(echo $version | cut -d. -f-2)
 patch=$(echo $version | cut -d. -f3)
 
@@ -28,13 +30,12 @@ export FCFLAGS="-fPIC"
 
 cd ${PKGDIR:-"../pkg"}
 
-software=$name-$version
 [[ -d $software ]] || ( wget $url; tar -xf $software.tar.gz )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$name/$version"
+prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 case "$name" in
@@ -47,5 +48,7 @@ esac
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
+
+$STACKROOT/ush/deploy_module.sh "compiler" $name $version
 
 exit 0

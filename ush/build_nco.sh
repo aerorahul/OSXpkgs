@@ -6,6 +6,8 @@ set -ex
 name="nco"
 version=$1
 
+software=$name-$version
+
 compiler=${COMPILER:-"gnu-7.3.0"}
 
 set +x
@@ -31,13 +33,12 @@ gitURL="https://github.com/nco/nco.git"
 
 cd ${PKGDIR:-"../pkg"}
 
-software=$name-$version
 [[ -d $software ]] || ( git clone -b $version $gitURL $software )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$name/$version"
+prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 ../configure --prefix=$prefix --enable-doc=no
@@ -45,5 +46,7 @@ prefix="${PREFIX:-"$HOME/opt"}/$compiler/$name/$version"
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
+
+$STACKROOT/ush/deploy_module.sh "compiler" $name $version
 
 exit 0

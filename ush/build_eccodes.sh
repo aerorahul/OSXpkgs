@@ -5,6 +5,8 @@ set -ex
 name="eccodes"
 version=$1
 
+software=$name-$version
+
 compiler=${COMPILER:-"gnu-7.3.0"}
 
 set +x
@@ -24,13 +26,12 @@ gitURL="https://github.com/ecmwf/eccodes.git"
 
 cd ${PKGDIR:-"../pkg"}
 
-software=$name-$version
 [[ -d $software ]] || ( git clone -b $version $gitURL $software )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$name/$version"
+prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 cmake -DCMAKE_INSTALL_PREFIX=$prefix -DENABLE_NETCDF=ON -DENABLE_FORTRAN=ON ..
@@ -38,5 +39,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$prefix -DENABLE_NETCDF=ON -DENABLE_FORTRAN=ON ..
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && ctest
 make install
+
+$STACKROOT/ush/deploy_module.sh "compiler" $name $version
 
 exit 0

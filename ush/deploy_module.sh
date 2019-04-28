@@ -1,8 +1,8 @@
 #!/bin/sh
 
-set -ex
+set -x
 
-# This script creates a modulefile for a given package
+# Create a modulefile for a given package
 # based on a pre-existing template
 
 # Arguments:
@@ -17,7 +17,7 @@ pkgVersion=$3
 case $hierarchyA in
     "core" )
         from_tmpl="$STACKROOT/modulefiles/core/$pkgName/$pkgName.lua.tmpl"
-	    to_lua="$PREFIX/modulefiles/core/$pkgName/$pkgVersion.lua"
+        to_lua="$PREFIX/modulefiles/core/$pkgName/$pkgVersion.lua"
         ;;
 
     "compiler" )

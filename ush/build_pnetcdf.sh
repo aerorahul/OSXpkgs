@@ -41,7 +41,7 @@ cd ${PKGDIR:-"../pkg"}
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"${HOME}/opt"}/$compiler/$mpi/$name/$version"
+prefix="$PREFIX/$compiler/$mpi/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 ../configure --prefix=$prefix --enable-shared --enable-netcdf4 --with-netcdf4=$NETCDF_ROOT
@@ -49,5 +49,7 @@ prefix="${PREFIX:-"${HOME}/opt"}/$compiler/$mpi/$name/$version"
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
+
+$STACKROOT/ush/deploy_module.sh "mpi" $name $version
 
 exit 0

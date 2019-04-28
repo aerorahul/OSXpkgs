@@ -33,7 +33,7 @@ cd ${PKGDIR:-"../pkg"}
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="${PREFIX:-"$HOME/opt"}/$compiler/$name/$version"
+prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 ../configure --prefix=$prefix $extra_confs
@@ -41,5 +41,7 @@ prefix="${PREFIX:-"$HOME/opt"}/$compiler/$name/$version"
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
+
+$STACKROOT/ush/deploy_module.sh "compiler" $name $version
 
 exit 0
