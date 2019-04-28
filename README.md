@@ -55,5 +55,5 @@ Check the installation; will execute ctest or make check
 ```
 export CHECK="YES" | "NO" # Enable | Disable checking
 ```
-### Todos
-Update `ush/deploy_modules.sh` to automagically create appropriate modulefiles for packages from templates.
+### Modules
+A modulefile will be created from a template and deployed to `$OPT/modulefiles` following `Lmod` Software Module hierarchy.
