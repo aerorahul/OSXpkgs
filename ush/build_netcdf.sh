@@ -80,6 +80,8 @@ make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
 
+export CXXFLAGS+=" -I$prefix/include"
+
 cd $curr_dir
 
 # NetCDF CXX
@@ -97,6 +99,6 @@ make -j${NTHREADS:-4}
 make install
 
 [[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
-$STACKROOT/ush/deploy_module.sh $hierarchy $name $version
+$STACKROOT/ush/deploy_module.sh $hierarchy $name $c_version
 
 exit 0

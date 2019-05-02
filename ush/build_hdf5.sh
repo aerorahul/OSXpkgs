@@ -50,7 +50,7 @@ make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
 
-[[ -z $mpi ]] && hierarchy="compliler" || hierarchy="mpi"
+[[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
 $STACKROOT/ush/deploy_module.sh $hierarchy $name $version
 
 exit 0

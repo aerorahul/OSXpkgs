@@ -15,6 +15,7 @@ module load $(echo $compiler | sed 's/-/\//g')
 module load szip
 module load hdf5
 module load netcdf
+module load ecbuild
 module list
 set -x
 
@@ -34,7 +35,7 @@ mkdir -p build && cd build
 prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
-cmake -DCMAKE_INSTALL_PREFIX=$prefix -DENABLE_NETCDF=ON -DENABLE_FORTRAN=ON ..
+ecbuild --prefix=$prefix -DENABLE_NETCDF=ON -DENABLE_FORTRAN=ON ..
 
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && ctest
