@@ -8,5 +8,7 @@
 *.odb
 *.swp
 *~
+log*
+
 # Ignore the contents of these directories
 build/

@@ -8,19 +8,22 @@ export PREFIX="${HOME}/opt"
 export CHECK="NO"
 export PKGDIR="$STACKROOT/pkg"
 
+export OPT=$PREFIX
+
 compilerName="gnu"
-compilerVersion="7.3.0"
+compilerVersion="7.4.0"
 export COMPILER="$compilerName-$compilerVersion"
 
-# First build utilites that are only headers
+# First build utilites that are independent of compiler/mpi
+./build_ecbuild.sh "2.9.3" 2>&1 | tee log.ecbuild
 ./build_eigen.sh "3.3.5" 2>&1 | tee log.eigen
 
 # Next build the GNU compiler
-./build_gnu.sh $compilerVersion 2>&1 | tee log.gnu
+#./build_gnu.sh $compilerVersion 2>&1 | tee log.gnu
 
 # Next build GNU compiler suite
-./build_jasper.sh "1.900.1" 2>&1 | tee log.jasper
-./build_zlib.sh "1.2.8" 2>&1 | tee log.zlib
+#./build_jasper.sh "1.900.1" 2>&1 | tee log.jasper
+#./build_zlib.sh "1.2.8" 2>&1 | tee log.zlib
 ./build_szip.sh "2.1.1" 2>&1 | tee log.szip
 ./build_udunits.sh "2.2.26" 2>&1 | tee log.udunits
 ./build_lapack.sh "3.8.0" 2>&1 | tee log.lapack
@@ -46,6 +49,8 @@ export MPI="$mpiName-$mpiVersion"
 ./build_boost.sh "1.68.0" 2>&1 | tee log.boost.$mpiName
 ./build_esmf "7_1_0r" 2>&1 | tee log.esmf.$mpiName
 ./build_baselibs.sh "5.2.2" 2>&1 | tee log.baselibs.$mpiName
+./build_eckit.sh "0.23.0" "ecmwf" 2>&1 | tee log.eckit.$mpiName
+./build_fckit.sh "develop" "jcsda" 2>&1 | tee log.fckit.$mpiName
 
 # Finally build GNU + MPICH compiler suite
 mpiName="mpich"
@@ -60,5 +65,7 @@ export MPI="$mpiName-$mpiVersion"
 ./build_boost.sh "1.68.0" 2>&1 | tee log.boost.$mpiName
 ./build_esmf "7_1_0r" 2>&1 | tee log.esmf.$mpiName
 ./build_baselibs.sh "5.2.2" 2>&1 | tee log.baselibs.$mpiName
+./build_eckit.sh "0.23.0" "ecmwf" 2>&1 | tee log.eckit.$mpiName
+./build_fckit.sh "develop" "jcsda" 2>&1 | tee log.fckit.$mpiName
 
 exit 0

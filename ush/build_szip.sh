@@ -19,8 +19,11 @@ export CFLAGS="-fPIC"
 export CXXFLAGS="-fPIC"
 export FCFLAGS="-fPIC"
 
+url="https://support.hdfgroup.org/ftp/lib-external/$name/$version/src/$software.tar.gz"
+
 cd ${PKGDIR:-"../pkg"}
 
+[[ -d $software ]] || ( wget $url; tar -xf $software.tar.gz )
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
