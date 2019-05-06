@@ -5,8 +5,8 @@ set -ex
 name="hdf5"
 version_=$1
 
-version=$(echo $version | sed 's/_/\./g')
-software=$name-$version
+version=$(echo $version_ | sed 's/_/./g')
+software=$name-$version_
 
 compiler=${COMPILER:-"gnu-7.3.0"}
 mpi=${MPI:-""}

@@ -13,14 +13,14 @@ load("szip/2.1.1")
 load("mpich/3.2.1")
 
 load("eigen/3.3.5")
-load("boost/1_68_0")
+load("boost/1.68.0")
 
 load("ecbuild/2.9.3")
 
 load("eckit/0.23.0")
-load("fckit/jcsda-develop")
+load("fckit/develop")
 
-load("hdf5/1_10_3")
+load("hdf5/1.10.3")
 load("netcdf/4.6.1")
 
 whatis("Name: ".. pkgName)
