@@ -23,6 +23,11 @@ The following software can be built with the scripts under `ush` and instruction
 * ESMF
 * ESMA-Baselibs
 
+The following extra software required for [JEDI](https://github.com/jcsda/jedi-docs) project can also be built:
+* ECBuild
+* ECkit
+* FCkit
+
 ### Pre-requisites
 * `lmod` - Lua Modules for software stack management
 * `wget`, `curl`, `git` - for fetching packages
