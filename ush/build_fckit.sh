@@ -15,9 +15,6 @@ set +x
 source $MODULESHOME/init/sh
 module load $(echo $compiler | sed 's/-/\//g')
 module load $(echo $mpi | sed 's/-/\//g')
-module load szip
-module load hdf5
-module load netcdf
 module load eigen
 module load boost
 module load eckit
