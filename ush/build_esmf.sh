@@ -13,8 +13,8 @@ mpi=${MPI:-""}
 set +x
 source $MODULESHOME/init/sh
 module load $(echo $compiler | sed 's/-/\//g')
-module load szip
 module load $(echo $mpi | sed 's/-/\//g')
+module load szip
 module load hdf5
 module load netcdf
 module load udunits
@@ -22,6 +22,11 @@ module list
 set -x
 
 if [[ ! -z $mpi ]]; then
+    if [[ $(echo $mpi | cut -d- -f1) = "openmpi" ]]; then
+        export ESMF_COMM="openmpi"
+    elif [[ $(echo $mpi | cut -d- -f1) = "mpich" ]]; then
+        export ESMF_COMM="mpich3"
+    fi
     export FC=mpif90
     export CC=mpicc
     export CXX=mpicxx
@@ -33,15 +38,8 @@ export CFLAGS="-fPIC"
 export CXXFLAGS="-fPIC"
 export FCFLAGS="$FFLAGS"
 
-if [[ ! -z $mpi ]]; then
-
-    if [[ $(echo $mpi | cut -d- -f1) = "openmpi" ]]; then
-        export ESMF_COMM="openmpi"
-    elif [[ $(echo $mpi | cut -d- -f1) = "mpich" ]]; then
-        export ESMF_COMM="mpich3"
-    fi
-
-fi
+export ESMF_F90COMPILER=$FC
+export ESMF_CXXCOMPILER=$CXX
 
 export ESMF_COMPILER="gfortran"
 export ESMF_NETCDF="nc-config"
