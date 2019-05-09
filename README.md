@@ -15,7 +15,7 @@ The following software can be built with the scripts under `ush` and instruction
 * NCCMP
 * Udunits
 * NetCDF Climate Operators
-* Boost
+* Boost (Full library or Headers only)
 * Eigen
 * LAPACK
 * FFTW
@@ -31,7 +31,7 @@ The following extra software required for [JEDI](https://github.com/jcsda/jedi-d
 ### Pre-requisites
 * `lmod` - Lua Modules for software stack management
 * `wget`, `curl`, `git` - for fetching packages
-* Other
+* Other - `cmake`, `autoconf` - for building packages
 
 ### Packages
 The individual packages will be fetched from their respective sources, but can be downloaded, untarred and placed under`pkg` if desired.  Most build scripts will look for directory `pkg/pkgName-pkgVersion` e.g. `pkg/hdf5-1_10_3`.
@@ -39,8 +39,9 @@ The individual packages will be fetched from their respective sources, but can b
 ### Compiler options
 Set the default compiler to build the stack.
 ```
-export COMPILER="gnu-7.3.0"
+export COMPILER="gnu-7.4.0"
 ```
+If using system `gcc`, a modulefile will have to be manually deployed.
 
 ### MPI options
 Set the default MPI flavour to build the stack (or disable it).
