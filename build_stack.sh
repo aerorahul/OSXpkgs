@@ -10,6 +10,9 @@ source $config
 
 set -x
 
+#First nullify MPI variable for serial build
+MPI_=$MPI ; export MPI=""
+
 # Build COMPILER libraries
 [[ $BUILD_zlib =~ [yYtT] ]] && \
     ush/build_zlib.sh "$VER_zlib" 2>&1 | tee "$LOGDIR/log.zlib"
@@ -42,6 +45,7 @@ set -x
     ush/build_nccmp.sh "$VER_nccmp" 2>&1 | tee "$LOGDIR/log.nccmp"
 
 # Now build MPI libraries
+export MPI=$MPI_; unset MPI_
 set +x
 module load $MPI
 set -x
@@ -60,5 +64,8 @@ set -x
 
 [[ $BUILD_netcdf =~ [yYtT] ]] && \
     ush/build_netcdf.sh "$VER_netcdf_c" "$VER_netcdf_f" "$VER_netcdf_cxx" 2>&1 | tee "$LOGDIR/log.netcdf-mpi"
+
+[[ $BUILD_esmf =~ [yYtT] ]] && \
+    ush/build_esmf.sh "$VER_esmf" 2>&1 | tee "$LOGDIR/log.esmf-mpi"
 
 exit 0
