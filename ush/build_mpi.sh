@@ -2,8 +2,10 @@
 
 set -ex
 
-name=$1
-version=$2
+pkg=$1
+
+name=$(echo $pkg | cut -d- -f1)
+version=$(echo $pkg | cut -d- -f2)
 
 software=$name-$version
 

@@ -5,8 +5,9 @@
 
 set -ex
 
-name="gnu"
-version=$1
+pkg=$1
+name=$(echo $pkg | cut -d- -f1)
+version=$(echo $pkg | cut -d- -f2)
 
 cd ${PKGDIR:-"../pkg"}
 curr_dir=$(pwd)
