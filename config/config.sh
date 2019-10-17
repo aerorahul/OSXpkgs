@@ -1,12 +1,13 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 # Where do you want to Install packages to?
 export PREFIX="${HOME}/opt"
 
 # Where do you want to download and build packages into?
 export PKGDIR="${STACKROOT}/pkg"
+export LOGDIR="${STACKROOT}/pkg"
 
 # Do you wish to check for built packages via make check or ctest?
 export CHECK=N
@@ -16,8 +17,8 @@ export FAMILY_COMPILER="gnu"
 export FAMILY_MPI="openmpi"
 
 # What to build; compiler and mpi
-export BUILD_COMPILER="native-module"  # OPTIONS: native-module | setup-module | from-source
-export BUILD_MPI="from-source"         # OPTIONS: native-module | setup-module | from-source
+export BUILD_COMPILER="setup-module"  # OPTIONS: native-module | setup-module | from-source
+#export BUILD_MPI="from-source"         # OPTIONS: native-module | setup-module | from-source
 
 # What to build; stack
 export BUILD_szip=Y

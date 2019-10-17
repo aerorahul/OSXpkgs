@@ -1,12 +1,14 @@
 #!/bin/sh
 
-set -ex
+set -e
+
+export STACKROOT=$(pwd)
 
 # Source configuration options
 config=${1:-"config/config.sh"}
 source $config
 
-export STACKROOT=$(dirname $PWD)
+set -x
 
 # First determine if COMPILER needs to be built or loaded
 case ${BUILD_COMPILER} in
@@ -23,7 +25,7 @@ case ${BUILD_COMPILER} in
     "from-source")
         echo "BUILD COMPILER FROM SOURCE"
         if [[ ${FAMILY_COMPILER} =~ "gnu" ]]; then
-            ush/build_gnu.sh "$COMPILER" 2>&1 | tee "$LOGdir/log.gnu"
+            ush/build_gnu.sh "$COMPILER" 2>&1 | tee "$LOGDIR/log.gnu"
         else
             echo "ERROR: COMPILER $COMPILER NOT FOUND: ABORT!"
             exit 1
@@ -35,12 +37,7 @@ case ${BUILD_COMPILER} in
         ;;
 esac
 
-# If building MPI, build dependencies such as szip
-[[ ${BUILD_MPI} =~ [yYtT] ]] && \
-    ush/build_szip.sh "$VER_szip" 2>&1 | tee "$LOGdir/log.szip"
-
-[[ ${BUILD_MPI} =~ [yYtT] ]] || exit
-
+# Next determine if MPI needs to be built or loaded
 case ${BUILD_MPI} in
     "native-module")
         echo "USING NATIVE MPI MODULE"
@@ -55,7 +52,8 @@ case ${BUILD_MPI} in
         ;;
     "from-source")
         echo "BUILD MPI FROM SOURCE"
-        ush/build_mpi.sh "$MPI" 2>&1 | tee "$LOGdir/log.$MPI"
+        ush/build_szip.sh "$VER_szip" 2>&1 | tee "$LOGDIR/log.szip"
+        ush/build_mpi.sh "$MPI" 2>&1 | tee "$LOGDIR/log.$MPI"
         ;;
     *)
         echo "ERROR: UNKNOWN OPTION FOR BUILD_MPI = ${BUILD_MPI}: ABORT!"
