@@ -3,8 +3,10 @@
 set -ex
 
 name="eckit"
-version=$1
-gitFork=${2:-"ecmwf"}
+srcver=$1
+
+gitFork=$(echo $srcver | cut -d: -f1)
+version=$(echo $srcver | cut -d: -f2)
 
 software=$name-$gitFork-$version
 
@@ -33,7 +35,7 @@ cd ${PKGDIR:-"../pkg"}
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="$PREFIX/$compiler/$mpi/$name/$version"
+prefix="$PREFIX/$compiler/$mpi/$name/$gitFork-$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 ecbuild --prefix=$prefix ..
@@ -43,6 +45,6 @@ ctest
 make install
 
 [[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
-$STACKROOT/ush/deploy_module.sh $hierarchy $name $version
+$STACKROOT/ush/deploy_module.sh $hierarchy $name $gitFork-$version
 
 exit 0

@@ -3,11 +3,14 @@
 set -ex
 
 name="ecbuild"
-version=$1
+srcver=$1
 
-software=$name-$version
+gitFork=$(echo $srcver | cut -d: -f1)
+version=$(echo $srcver | cut -d: -f2)
 
-gitURL="https://github.com/ecmwf/ecbuild.git"
+software=$name-$gitFork-$version
+
+gitURL="https://github.com/$gitFork/$name.git"
 
 cd ${PKGDIR:-"../pkg"}
 
@@ -16,7 +19,7 @@ cd ${PKGDIR:-"../pkg"}
 [[ -d build ]] && rm -rf build
 mkdir -p build && cd build
 
-prefix="$PREFIX/$name/$version"
+prefix="$PREFIX/$name/$gitFork-$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 cmake -DCMAKE_INSTALL_PREFIX=$prefix ..
@@ -25,6 +28,6 @@ make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && ctest
 make install
 
-$STACKROOT/ush/deploy_module.sh "core" $name $version
+$STACKROOT/ush/deploy_module.sh "core" $name $gitFork-$version
 
 exit 0

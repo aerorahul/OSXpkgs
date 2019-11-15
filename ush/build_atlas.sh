@@ -2,7 +2,7 @@
 
 set -ex
 
-name="fckit"
+name="atlas"
 srcver=$1
 
 gitFork=$(echo $srcver | cut -d: -f1)
@@ -17,10 +17,15 @@ set +x
 source $MODULESHOME/init/sh
 module load $(echo $compiler | sed 's/-/\//g')
 module load $(echo $mpi | sed 's/-/\//g')
+module load szip
+module load hdf5
+module load netcdf
 module load eigen
 module load boost
-module load eckit
+module load cgal
 module load ecbuild
+module load eckit
+module load fckit
 module list
 set -x
 

@@ -38,9 +38,6 @@ export BUILD_boost=Y
 export BUILD_eigen=Y
 export BUILD_esmf=Y
 export BUILD_baselibs=Y
-export BUILD_ecbuild=Y
-export BUILD_eckit=Y
-export BUILD_fckit=Y
 export BUILD_eccodes=Y
 
 
@@ -65,9 +62,6 @@ export VER_boost="1.68.0"
 export VER_eigen="3.3.5"
 export VER_esmf="7_1_0r"
 export VER_baselibs="5.2.2"
-export VER_ecbuild="release-stable"
-export VER_eckit="1.4.0"
-export VER_fckit="develop"
 export VER_eccodes="2.8.2"
 
 ################################################################################

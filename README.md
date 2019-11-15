@@ -28,6 +28,7 @@ The following extra software required for [JEDI](https://github.com/jcsda/jedi-d
 * ECBuild
 * ECkit
 * FCkit
+* ATLAS
 
 ### Pre-requisites
 * `lmod` - Lua Modules for software stack management
@@ -57,6 +58,8 @@ If `$PREFIX` is anything other than `/opt`, the user will have to define an envi
 Installation is performed in 2 steps:
 - First if neccessary execute `build_base.sh`.  This builds or sets up the compiler and mpi family.  Only GNU compilers can be built with this script.  For CLang or Intel, follow the providers instructions.  It can also use the `native-module`; which implies to use an existing module for that compiler/mpi family.
 If a modulefile does not exist, the `setup-module` option can be used to set up the modulefile.  It may need manual intervention.
+- Next, `build_stack.sh` will build the generic packages and its associated modulefiles.
+- Finally, if desired, `build_jedi.sh` can be used to build JEDI specific packages (and its modulefiles), e.g. ECkit etc.
 
 ### Verify installation
 Check the installation; will execute ctest or make check
