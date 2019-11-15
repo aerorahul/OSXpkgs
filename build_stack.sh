@@ -47,7 +47,8 @@ MPI_=$MPI ; export MPI=""
 [[ $BUILD_cgal =~ [yYtT] ]] && \
     $STACKROOT/ush/build_cgal.sh "$VER_cgal" 2>&1 | tee "$LOGDIR/log.cgal"
 
-# Now build MPI libraries
+# Now build parallel (MPI) libraries (if desired)
+[[ $SERIAL_ONLY =~ [yYtT] ]] && exit 0
 export MPI=$MPI_; unset MPI_
 
 [[ $BUILD_boost  =~ [yYtT] ]] && \

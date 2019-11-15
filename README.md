@@ -13,6 +13,7 @@ The following software can be built with the scripts under `ush` and instruction
 * NetCDF
 * Parallel NetCDF
 * NCCMP
+* CGAL
 * Udunits
 * NetCDF Climate Operators
 * Boost (Full library or Headers only)
