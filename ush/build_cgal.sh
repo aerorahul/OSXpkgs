@@ -33,7 +33,7 @@ mkdir -p build && cd build
 prefix="$PREFIX/$compiler/$name/$version"
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
-cmake -DCMAKE_INSTALL_PREFIX=$prefix ..
+cmake -DCGAL_HEADER_ONLY=OFF -DCMAKE_INSTALL_PREFIX=$prefix ..
 make -j${NTHREADS:-4}
 [[ "$CHECK" = "YES" ]] && make check
 make install
