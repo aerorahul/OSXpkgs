@@ -31,6 +31,9 @@ case ${BUILD_COMPILER} in
             exit 1
         fi
         ;;
+    "skip")
+        echo "SKIPPING COMPILER BUILDING!"
+        ;;
     *)
         echo "ERROR: UNKNOWN OPTION FOR BUILD_COMPILER = ${BUILD_COMPILER}: ABORT!"
         exit 1
@@ -54,6 +57,9 @@ case ${BUILD_MPI} in
         echo "BUILD MPI FROM SOURCE"
         ush/build_szip.sh "$VER_szip" 2>&1 | tee "$LOGDIR/log.szip"
         ush/build_mpi.sh "$MPI" 2>&1 | tee "$LOGDIR/log.$MPI"
+        ;;
+    "skip")
+        echo "SKIPPING MPI BUILDING!"
         ;;
     *)
         echo "ERROR: UNKNOWN OPTION FOR BUILD_MPI = ${BUILD_MPI}: ABORT!"

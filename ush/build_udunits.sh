@@ -18,7 +18,7 @@ set -x
 export FCFLAGS="-fPIC"
 export CFLAGS="-fPIC"
 
-url="ftp://ftp.unidata.ucar.edu/pub/udunits/$software.tar.gz"
+url="https://www.unidata.ucar.edu/downloads/udunits/$software.tar.gz"
 
 cd ${PKGDIR:-"../pkg"}
 

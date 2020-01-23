@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -12,4 +12,4 @@ export BUILD_atlas=Y
 export VER_ecbuild="jcsda:develop"
 export VER_eckit="jcsda:develop"
 export VER_fckit="jcsda:develop"
-export VER_atlas="ecmwf:develop"
+export VER_atlas="ecmwf:0.19.1"

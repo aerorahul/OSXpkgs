@@ -17,8 +17,8 @@ export FAMILY_COMPILER="gnu"
 export FAMILY_MPI="openmpi"
 
 # What to build; compiler and mpi
-export BUILD_COMPILER="setup-module"  # OPTIONS: native-module | setup-module | from-source
-#export BUILD_MPI="from-source"         # OPTIONS: native-module | setup-module | from-source
+export BUILD_COMPILER="setup-module"  # OPTIONS: skip | native-module | setup-module | from-source
+export BUILD_MPI="skip"               # OPTIONS: skip | native-module | setup-module | from-source
 
 # Build MPI version of stack
 export SERIAL_ONLY=Y
@@ -42,7 +42,7 @@ export BUILD_eccodes=Y
 
 
 # What version of software to build
-export VER_gnu="7.4.0"
+export VER_gnu="9.2.0"
 export VER_clang="10.0.1"
 export VER_openmpi="3.1.4"
 export VER_mpich="3.2.1"
