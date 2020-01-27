@@ -30,7 +30,11 @@ cd ${PKGDIR:-"../pkg"}
 
 BoostRoot=$(pwd)
 
-prefix="$PREFIX/$compiler/$mpi/$name/$version"
+if [[ $HEADERS_ONLY != "YES" ]]; then
+  prefix="$PREFIX/$compiler/$mpi/$name/$version"
+else
+  prefix="$PREFIX/$name/$version"
+fi
 [[ -d $prefix ]] && ( echo "$prefix exists, ABORT!"; exit 1 )
 
 mkdir -p $prefix $prefix/include
@@ -88,7 +92,11 @@ fi
 
 cp -R boost $prefix/include
 
-[[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
+if [[ $HEADERS_ONLY != "YES" ]]; then
+  [[ -z $mpi ]] && hierarchy="compiler" || hierarchy="mpi"
+else
+  hierarchy="core"
+fi
 $STACKROOT/ush/deploy_module.sh $hierarchy $name $version
 
 exit 0
